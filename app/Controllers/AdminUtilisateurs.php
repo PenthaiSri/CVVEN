@@ -22,10 +22,11 @@ class AdminUtilisateurs extends Controller
         ];
 
         if($this->validate($rules)){
-            $model = new UtilisateurModel();
+            $model = new UserModel();
             $data = [
+                'user_id'=> $this->request->getVar('id'),
                 'user_name' => $this->request->getVar('name'),
-                ',user_email' => $this->request->getVar('email'),
+                'user_email' => $this->request->getVar('email'),
                 'role'=>$this->request->getVar('role'),
                 'user_password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT)
             ];
@@ -63,12 +64,15 @@ class AdminUtilisateurs extends Controller
                 'titre'=>'Erreur',
                 'message'=>"Supprimez d'abord les réservations non validées de cet utilisateur !"]);
         }
-
-        # Supprimer l'utilisateur
-        $model = new UserModel();
-        $model->delete($id);
-
         return redirect()->to( '/AdminUtilisateurs/liste' );
+    }
+    
+    public function delUser($user_id){
+        # Supprimer un utilisateur
+        $model = new UserModel();
+        $model ->delete($user_id);
+        
+        return redirect()->to('/AdminUtilisateurs/liste');
     }
 
     public function liste(){
@@ -78,6 +82,6 @@ class AdminUtilisateurs extends Controller
         $allUtils = $model->findAll();
 
         # Renvoie vers la vue
-        return view('admin_utilisateurs.php', ['utilisateurs'=>$allUtils] );
+        return view('admin_utilisateurs.php', ['users'=>$allUtils] );
     }
 }
