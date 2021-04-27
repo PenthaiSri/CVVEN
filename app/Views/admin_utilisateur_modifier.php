@@ -10,45 +10,13 @@
     <link rel="stylesheet" href="<?= base_url("css/anima.css") ?>">
     <link rel="shortcut icon" href="../img/icon.webp">
     
-    <title>Page d'inscription</title>
+    <title>Admin - Modifier un utilisateur</title>
   </head>
   <body>
-      
-      
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">  
-        <div class="container-fluid">
-        <?= anchor("",'<img src="'.base_url("img/icon.webp").'" alt="logo">',"class = 'navbar-brand'" )?>
-        
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    
-      <ul class="navbar-nav ml-auto">
-          
-          <li class="nav-item">
-    <?php echo anchor("login","Authentification","class = 'nav-link'")?>
-  </li>
-          
-          
-  <li>     
-          <div class="dropdown">
-      
-      
-    </div>
-  </li>
-   
-          
-       
-  
-       </ul>
-      
-      
-     
-      
-        
-            </div>
-    </div>
-    </nav>
+
+  <!-- NAVBAR -->
+  <?php include '_MENU_ADMIN.php' ?>
+
         <div class="row justify-content-md-center">
  
             <div class="col-6">
@@ -57,33 +25,33 @@
                 <br>
                 <br>
                 
-                <h1 style="color:#4d4d4d;">Inscription</h1>
+                <h1 style="color:#4d4d4d;">Modifier un utilisateur</h1>
                 
                 <br>
                 <br>
                 <?php if(isset($validation)):?>
                     <div class="alert alert-danger"><?= $validation->listErrors() ?></div>
                 <?php endif;?>
-                <form action="<?php echo site_url('register/save') ?>" method="post">
+                <form action="<?php echo site_url('adminUtilisateurs/modifierSave/' . $util['id']) ?>" method="post">
                     <div class="mb-3">
                         <label for="InputForName" class="form-label">Prénom</label>
-                        <input type="text" name="prenom" class="form-control" value="<?= set_value('prenom') ?>">
+                        <input type="text" name="prenom" class="form-control" value="<?= set_value('prenom', $util['prenom']) ?>">
                     </div>
                     <div class="mb-3">
                         <label for="InputForName" class="form-label">Nom</label>
-                        <input type="text" name="nom" class="form-control" value="<?= set_value('nom') ?>">
+                        <input type="text" name="nom" class="form-control" value="<?= set_value('nom', $util['nom']) ?>">
                     </div>
                     <div class="mb-3">
                         <label for="InputForEmail" class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="<?= set_value('email') ?>">
+                        <input type="email" name="email" class="form-control" value="<?= set_value('email', $util['email']) ?>">
                     </div>
                     <div class="mb-3">
                         <label for="InputForEmail" class="form-label">Téléphone</label>
-                        <input type="tel" name="tel" class="form-control" value="<?= set_value('tel') ?>">
+                        <input type="tel" name="tel" class="form-control" value="<?= set_value('tel', $util['tel']) ?>">
                     </div>
                     <div class="mb-3">
                         <label for="InputForEmail" class="form-label">Adresse</label>
-                        <input type="text" name="adresse" class="form-control" value="<?= set_value('adresse') ?>">
+                        <input type="text" name="adresse" class="form-control" value="<?= set_value('adresse', $util['adresse']) ?>">
                     </div>
                     <div class="mb-3">
                         <label for="InputForPassword" class="form-label">Mot de passe</label>

@@ -23,10 +23,10 @@ class ReservationModel extends Model
         $builder = $this->select('reservation.id, reservation.prix_total, reservation.date_entree, reservation.date_sortie,
                             reservation.type_sejour, reservation.menage_fin_sejour_inclus,
                             reservation_logement.quantite, typelogement.nom tl_nom,
-                            users.user_id util_id, users.user_name, users.user_email')
+                            utilisateur.id util_id, utilisateur.nom, utilisateur.prenom, utilisateur.email')
             ->join('reservation_logement', 'reservation.id=reservation_logement.id_reservation')
             ->join('typelogement', 'reservation_logement.id_typelogement=typelogement.id')
-            ->join('users', 'reservation.utilisateur_id=users.user_id')
+            ->join('utilisateur', 'reservation.utilisateur_id=utilisateur.id')
             ->where('reservation.etat=', $etat)
             ->orderBy('reservation.id','desc');
         if( $clientId!=null ){

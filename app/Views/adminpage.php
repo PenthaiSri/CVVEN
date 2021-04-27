@@ -71,7 +71,8 @@
                                 <td><?php echo $r['menage_fin_sejour_inclus'] ?></td>
                                 <td><?php echo $r['prix_total'] ?></td>
                                 <td>
-                                    <!-- bouton valider et refuser une reservation -->
+                                    <!-- bouton modifier, valider et refuser une reservation -->
+                                    <a href="<?php echo site_url('AdminReservations/modifier/'.$r['id']) ?>" class="btn btn-sm btn-danger">Modifier</a>
                                     <a href="<?php echo site_url('AdminReservations/valider/'.$r['id']) ?>" class="btn btn-sm btn-success" style="margin: 5px;">Valider</a>
                                     <a href="<?php echo site_url('AdminReservations/refuser/'.$r['id']) ?>" class="btn btn-sm btn-danger">Refuser</a>
                                 </td>

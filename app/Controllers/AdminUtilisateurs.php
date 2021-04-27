@@ -6,29 +6,81 @@ namespace App\Controllers;
 
 use App\Models\ReservationLogementModel;
 use App\Models\ReservationModel;
-use App\Models\UserModel;
+use App\Models\UtilisateurModel;
 use CodeIgniter\Controller;
 
 class AdminUtilisateurs extends Controller
 {
+    public function modifierSave($idUtil){
+        helper(['form']);
+
+        $rules = [
+            'prenom' => 'required|min_length[3]|max_length[20]',
+            'nom' => 'required|min_length[3]|max_length[20]',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email',
+        ];
+
+        if( $this->request->getVar('mdp')!=null ){
+
+            $rules['mdp'] = 'required|min_length[6]|max_length[20]';
+            $rules['confMdp'] = 'matches[mdp]';
+        }
+
+        if($this->validate($rules)){
+            $model = new UtilisateurModel();
+            $data = [
+                'id' => $idUtil,
+                'prenom' => $this->request->getVar('prenom'),
+                'nom' => $this->request->getVar('nom'),
+                'tel' => $this->request->getVar('tel'),
+                'adresse' => $this->request->getVar('adresse'),
+                'email' => $this->request->getVar('email'),
+            ];
+            if( $this->request->getVar('mdp')!=null ){
+                $data['mdp'] = password_hash($this->request->getVar('mdp'), PASSWORD_DEFAULT);
+            }
+
+            $model->save($data);
+            return redirect()->to(site_url('AdminUtilisateurs/liste'));
+        }else{
+            $model = new UtilisateurModel();
+            $util = $model->find($idUtil);
+
+            $data['validation'] = $this->validator;
+            $data['util'] = $util;
+            echo view('admin_utilisateur_modifier', $data);
+        }
+    }
+
+    public function modifier($utilId){
+
+        helper(['form']);
+        $model = new UtilisateurModel();
+        $util = $model->find($utilId);
+        echo view('admin_utilisateur_modifier', ['util'=>$util]);
+    }
+
     public function save(){
         helper(['form']);
 
         $rules = [
-            'name' => 'required|min_length[3]|max_length[20]',
-            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[users.user_email]',
-            'password' => 'required|min_length[6]|max_length[20]',
-            'confpassword' => 'matches[password]',
+            'prenom' => 'required|min_length[3]|max_length[20]',
+            'nom' => 'required|min_length[3]|max_length[20]',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[utilisateur.email]',
+            'mdp' => 'required|min_length[6]|max_length[20]',
+            'confMdp' => 'matches[mdp]',
         ];
 
         if($this->validate($rules)){
-            $model = new UserModel();
+            $model = new UtilisateurModel();
             $data = [
-                'user_id'=> $this->request->getVar('id'),
-                'user_name' => $this->request->getVar('name'),
-                'user_email' => $this->request->getVar('email'),
+                'prenom' => $this->request->getVar('prenom'),
+                'nom' => $this->request->getVar('nom'),
+                'tel' => $this->request->getVar('tel'),
+                'adresse' => $this->request->getVar('adresse'),
+                'email' => $this->request->getVar('email'),
                 'role'=>$this->request->getVar('role'),
-                'user_password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT)
+                'mdp' => password_hash($this->request->getVar('mdp'), PASSWORD_DEFAULT)
             ];
 
             $model->save($data);
@@ -64,24 +116,21 @@ class AdminUtilisateurs extends Controller
                 'titre'=>'Erreur',
                 'message'=>"Supprimez d'abord les réservations non validées de cet utilisateur !"]);
         }
+
+        # Supprimer l'utilisateur
+        $model = new UtilisateurModel();
+        $model->delete($id);
+
         return redirect()->to( '/AdminUtilisateurs/liste' );
-    }
-    
-    public function delUser($user_id){
-        # Supprimer un utilisateur
-        $model = new UserModel();
-        $model ->delete($user_id);
-        
-        return redirect()->to('/AdminUtilisateurs/liste');
     }
 
     public function liste(){
 
         # Récupère ts les utilisateurs
-        $model = new UserModel();
+        $model = new UtilisateurModel();
         $allUtils = $model->findAll();
 
         # Renvoie vers la vue
-        return view('admin_utilisateurs.php', ['users'=>$allUtils] );
+        return view('admin_utilisateurs.php', ['utilisateurs'=>$allUtils] );
     }
 }

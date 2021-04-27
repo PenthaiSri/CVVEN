@@ -21,7 +21,7 @@
 <body id="haut">
 
 <!-- NAVBAR -->
-<?php include '_MENU_CLIENT.php'?>
+<?php include '_MENU_CLIENT.php' ?>
 
 <!-- HEADER -->
 <header class="container-fluid">
@@ -31,11 +31,25 @@
         <div class="col-12 col-md-10 formBlack d-flex align-items-center">
 
             <div>
-                <h2>Bienvenue sur le site du CVVEN, <?php echo $session->get('user_name') ?> !</h2>
-
+                <h2>Changement MDP</h2>
             </div>
             <div class="col-12 col-md-6">
-
+                <h3>
+                    <?php if(isset($validation)):?>
+                        <div class="alert alert-danger"><?= $validation->listErrors() ?></div>
+                    <?php endif;?>
+                </h3>
+                <form action="<?php echo site_url("Moncompte/changerMdpPost") ?>" method="post">
+                    <div class="mb-3">
+                        <label for="InputForPassword" class="form-label">Nouveau Mot de passe</label>
+                        <input type="password" name="mdp1" class="form-control" id="mdp1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="InputForPassword" class="form-label">Retaper le mdp</label>
+                        <input type="password" name="mdp2" class="form-control" id="mdp2">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                </form>
 
             </div>
         </div>

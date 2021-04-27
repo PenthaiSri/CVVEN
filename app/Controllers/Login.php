@@ -1,7 +1,7 @@
 <?php namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use App\Models\UserModel;
+use App\Models\UtilisateurModel;
 
 class Login extends Controller
 {
@@ -14,18 +14,18 @@ class Login extends Controller
     public function auth()
     {
         $session = session();
-        $model = new UserModel();
+        $model = new UtilisateurModel();
         $email = $this->request->getVar('email');
         $mdpEntre = $this->request->getVar('password');
-        $data = $model->where('user_email', $email)->first();
+        $data = $model->where('email', $email)->first();
         if ($data) {
             $ses_data = [
-                'user_id' => $data['user_id'],
-                'user_name' => $data['user_name'],
-                'user_email' => $data['user_email'],
+                'user_id' => $data['id'],
+                'user_name' => $data['nom'],
+                'user_email' => $data['email'],
                 'logged_in' => TRUE
             ];
-            $mdpCrypte = $data['user_password'];
+            $mdpCrypte = $data['mdp'];
             $verify_pass = password_verify($mdpEntre, $mdpCrypte);
             // Redirige vers login si erreur de connexion
             if ($verify_pass == false) {
@@ -57,4 +57,4 @@ class Login extends Controller
         session()->destroy();
         return redirect()->to(site_url());
     }
-}  
+} 

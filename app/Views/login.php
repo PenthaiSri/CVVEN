@@ -1,31 +1,76 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Site CCVEN Jura">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/design.css">
-    <link rel="stylesheet" href="css/anima.css">
-
-    <link rel="shortcut icon" href="img/icon.webp">
+    <link rel="stylesheet" href="<?= base_url("css/design.css") ?>">
+    <link rel="stylesheet" href="<?= base_url("css/anima.css") ?>">
+    
+    <link rel="shortcut icon" href="../img/icon.webp">
     
     <title>Page d'authentification</title>
   </head>
   <body>
     
-    <!--<a class="navbar-brand" href="../index.php">
-    <img src="img/icon.webp"> <a>CCVEN Jura</a>-->
-    <div class="container">
+      
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <?= anchor("",'<img src="'.base_url("img/icon.webp").'" alt="logo">',"class = 'navbar-brand'" )?>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+    <?php echo anchor("register","Inscription","class = 'nav-link'")?>
+  </li>
+          
+          
+  <li>     
+          <div class="dropdown">
+      
+      
+    </div>
+  </li>
+   
+          
+       
+  
+       </ul>
+      
+      
+     
+      
+        
+            </div>
+    </div>
+    </nav>
+        
+        
+     
+        
         <div class="row justify-content-md-center">
  
             <div class="col-6">
-                <h1>Connexion</h1>
+                <br>
+                <br>
+                <br>
+                
+                <h1 style="color:#4d4d4d;">Connexion</h1>
+                
+                <br>
+                <br>
                 <?php if(session()->getFlashdata('msg')):?>
                     <div class="alert alert-danger"><?= session()->getFlashdata('msg') ?></div>
                 <?php endif;?>
-                <form action="/codeigniter1/public/login/auth" method="post">
+                <form action="<?php echo site_url("login/auth") ?>" method="post">
                     <div class="mb-3">
                         <label for="InputForEmail" class="form-label">Adresse Email</label>
                         <input type="email" name="email" class="form-control" id="InputForEmail" value="<?= set_value('email') ?>">

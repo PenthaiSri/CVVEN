@@ -1,7 +1,7 @@
 <?php namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use App\Models\UserModel;
+use App\Models\UtilisateurModel;
 
 class Register extends Controller {
     public function index() {
@@ -14,20 +14,25 @@ class Register extends Controller {
         helper(['form']);
         
         $rules = [
-            'name' => 'required|min_length[3]|max_length[20]',
-            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[users.user_email]',
-            'password' => 'required|min_length[6]|max_length[20]',
-            'confpassword' => 'matches[password]',
+            'prenom' => 'required|min_length[3]|max_length[20]',
+            'nom' => 'required|min_length[3]|max_length[20]',
+            'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[utilisateur.email]',
+            'mdp' => 'required|min_length[6]|max_length[20]',
+            'confMdp' => 'matches[mdp]',
         ];
         
         if($this->validate($rules)){
-            $model = new UserModel();
+            $model = new UtilisateurModel();
             $data = [
-                'user_name' => $this->request->getVar('name'),
-                'user_email' => $this->request->getVar('email'),
-                'role'=> UserModel::ROLE_CLIENT,
-                'user_password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT)
+                'prenom' => $this->request->getVar('prenom'),
+                'nom' => $this->request->getVar('nom'),
+                'tel' => $this->request->getVar('tel'),
+                'adresse' => $this->request->getVar('adresse'),
+                'email' => $this->request->getVar('email'),
+                'role'=>UtilisateurModel::ROLE_CLIENT,
+                'mdp' => password_hash($this->request->getVar('mdp'), PASSWORD_DEFAULT)
             ];
+
             $model->save($data);
             return redirect()->to(site_url('Login'));
         }else{
