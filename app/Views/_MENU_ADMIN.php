@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?= base_url("css/design.css") ?>">
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <?= anchor("", '<img src="' . base_url("img/icon.webp") . '" alt="logo">CCVEN Jura', "class = 'navbar-brand'") ?>
 
@@ -19,15 +20,14 @@
             <li class="nav-item">
                 <?php echo anchor("AdminReservations/liste", "Gestion séjours", "class = 'nav-link'") ?>
             </li>
-            <li class="nav-item">
-                <?php echo anchor("Login/logout", "Déconnexion", "class = 'nav-link'") ?>
-            </li>
 
             <!-- récupère l'username de la session pour l'afficher -->
 
             <li class="nav-item">
                 <?php $session = session(); ?>
-                <?php echo anchor("AdminPage", $session->get('user_name'), "class = 'nav-link'") ?>
+                <?php echo anchor("Moncompte/changermdpget", $session->get('user_name'), "class = 'dropdown-item'") ?>
+                <?php echo anchor("Login/logout", "Déconnexion", "class = 'dropdown-item'") ?>
+                <!--<?php echo anchor("Param", $session->get('user_name'), "class = 'nav-link'") ?>-->
             </li>
 
         </ul>

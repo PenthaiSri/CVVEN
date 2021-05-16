@@ -31,7 +31,7 @@
         <div class="col-12 col-md-10 formBlack d-flex align-items-center">
 
             <div>
-                <h2>Changement MDP</h2>
+                <h2>Modifier le mot de passe</h2>
             </div>
             <div class="col-12 col-md-6">
                 <h3>
@@ -41,11 +41,15 @@
                 </h3>
                 <form action="<?php echo site_url("Moncompte/changerMdpPost") ?>" method="post">
                     <div class="mb-3">
+                        <label for="InputForPassword" class="form-label">Mot de passe actuel</label>
+                        <input type="password" name="old_mdp" class="form-control" id="mdp1">
+                    </div>
+                    <div class="mb-3">
                         <label for="InputForPassword" class="form-label">Nouveau Mot de passe</label>
                         <input type="password" name="mdp1" class="form-control" id="mdp1">
                     </div>
                     <div class="mb-3">
-                        <label for="InputForPassword" class="form-label">Retaper le mdp</label>
+                        <label for="InputForPassword" class="form-label">Retaper le mot de passe</label>
                         <input type="password" name="mdp2" class="form-control" id="mdp2">
                     </div>
                     <button type="submit" class="btn btn-primary">Modifier</button>
