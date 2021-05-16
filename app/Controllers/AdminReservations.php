@@ -3,7 +3,7 @@
 
 namespace App\Controllers;
 
-
+use App\Controllers\Reservation;
 use App\Models\CalendrierVacancesModel;
 use App\Models\ReservationLogementModel;
 use App\Models\ReservationModel;
