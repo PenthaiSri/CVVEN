@@ -14,14 +14,20 @@ class Moncompte extends Controller
     public function changerMdpPost(){
 
         // Retourne sur le formulaire changement mdp en cas d'erreur de validation
+        $session = session();
+        $password = $this->request->getVar('old_mdp');
+        $model = new UtilisateurModel();
+        $data = $model->where('id', $session->get('id'))->first();
         $rules = [
             'mdp1' => 'required|min_length[6]|max_length[20]',
             'mdp2' => 'matches[mdp1]',
         ];
-        if( ! $this->validate($rules) ){
+        if(password_verify($password, $data['mdp'])){
+            if (!$this->validate($rules)) {
 
-            echo view( 'changerMdp', ['validation'=>$this->validator] );
-            return;
+                echo view('changerMdp', ['validation' => $this->validator]);
+                return;
+            }
         }
 
         // MDP valide

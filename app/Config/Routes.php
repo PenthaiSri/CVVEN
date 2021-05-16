@@ -38,6 +38,7 @@ $routes->get('login', 'Login::index');
 $routes->get('/dashboard', 'Dashboard::index',['filter' => 'auth']);
 $routes->get('reservation','Reservation::index');
 $routes->get('/adminpage', 'AdminPage::index');
+//$routes->get('/param','AdminPage');
 //$routes->get('pages','Pages');
 //$routes->match(['get', 'post'], 'news/create', 'News::create');
 //$routes->get('news/(:segment)', 'News::view/$1');

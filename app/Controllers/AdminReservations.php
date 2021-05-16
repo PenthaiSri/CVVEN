@@ -15,6 +15,10 @@ class AdminReservations extends Controller
 {
     public function modifierSave($reservationId){
         # Validation demande de réservation
+        $session = session();
+        helper(['form']);
+        helper("reservation_helper");
+        
         $rules = [
             'dateEntree' => 'required',
             'dateSortie' => 'required',
@@ -28,17 +32,17 @@ class AdminReservations extends Controller
 
             // Valide dateEntree samedi
             $dateEntree = $_POST['dateEntree'];
-            if (! Reservation::estSamedi($dateEntree)){
+            if (! estSamedi($dateEntree)){
                 die('Date entrée doit être un samedi');
             }
             // Valide que la date de sortie est un samedi
             $dateSortie = $_POST['dateSortie'];
-            if (! Reservation::estSamedi($dateSortie)){
+            if (! estSamedi($dateSortie)){
                 die('La date de sortie doit être un samedi');
             }
 
             // Valide que dateEntree est plus petite que dateSortie
-            if (!Reservation::dateAnterieure($dateEntree,$dateSortie)){
+            if (!dateAnterieure($dateEntree,$dateSortie)){
                 die('Date sortie est doit etre supérieur a date entrée');
             }
 
@@ -64,7 +68,7 @@ class AdminReservations extends Controller
         # Calcule prix total
         # Prix résa = (nb logements * ppn du tl*nb nuitées) + (ménage*nb logements) + (nb personnes*prix demi-p * nbnuits)
         $typeLogement = (new TypeLogementModel())->find( $_POST['typeLogement'] );
-        $nbNuitee = Reservation::calculeNbJoursEntreDates($dateEntree, $dateSortie);
+        $nbNuitee = calculeNbJoursEntreDates($dateEntree, $dateSortie);
         $prixTotal = $_POST['nbLogements'] * $typeLogement['prix_par_nuitee'] * $nbNuitee;
 
         if( isset( $_POST['menageInclus'] ) ){// Ménage
@@ -168,7 +172,7 @@ class AdminReservations extends Controller
         envoyerEmail($emailClient,"Réservation refusée", "Votre réservation à été refusée, n'hésitez pas à nous contacter!");
 
         # Redirection vers Liste des réservations
-        return redirect()->to('/AdminReservations/liste');
+        return redirect()->to('/codeigniter1/public/index.php/AdminReservations/liste');
     }
 
     public function valider($reservationId){
@@ -196,7 +200,7 @@ class AdminReservations extends Controller
         envoyerEmail($emailClient,"Réservation accepté", "Votre réservation à été acceptée!");
 
         # Redirection vers Liste des réservations
-        return redirect()->to('/AdminReservations/liste');
+        return redirect()->to('/codeigniter1/public/index.php/AdminReservations/liste');
     }
 
     public function liste(){
