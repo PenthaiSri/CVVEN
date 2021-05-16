@@ -40,7 +40,7 @@
                     <?php endif;?>
                 </h3>
                 Formulaire ICI
-                <?php echo form_open('reservation/post') ?>
+                <?php echo form_open('/reservation/post') ?>
                     <div class="mb-3">
                         <label class="form-label">Date d'entrée</label>
                         <input type="date" name="dateEntree" class="form-control" value="<?= set_value('dateEntree', $reservation['dateEntree']) ?>">

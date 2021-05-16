@@ -59,7 +59,7 @@ class Reservation extends Controller {
             'typeLogementId' => 'required'
         ];
 
-        # Charle les types de logement
+        # Charge les types de logement
         $data = [];
         $typesLogements = [];
         $model = new TypeLogementModel();
@@ -79,7 +79,7 @@ class Reservation extends Controller {
             }
             // Valide que la date de sortie est un samedi
             $dateSortie = $_POST['dateSortie'];
-            if (! estSamedi($dateSortie)){
+            if (!estSamedi($dateSortie)){
                 $this->validator->setError('date_sortie', 'Date sortie doit être un samedi');
             }
 
@@ -98,7 +98,7 @@ class Reservation extends Controller {
             $model = new ReservationModel();
             $nbLogementsDispos = $model->calculeNbLogementsDispo($dateEntree, $dateSortie, $_POST['typeLogementId']);
             if( $nbLogementsDispos<$_POST['nbLogements'] ){
-                $this->validator->setError('prix_total','Pas assez de logements displonibles : ' .$nbLogementsDispos);
+                $this->validator->setError('prix_total','Pas assez de logements disponibles : ' .$nbLogementsDispos);
             }
 
 
@@ -190,13 +190,13 @@ class Reservation extends Controller {
         $message = sprintf("Nouvelle demande de réservation de la part de %s %s: 
             , du %s au %s, %d %s x %d nuitées", $client['prenom'], $client['nom'], $dateEntree, $dateSortie, $_POST['nbLogements'],
             $typeLogement["nom"], calculeNbJoursEntreDates($dateEntree, $dateSortie));
-        envoyerEmail("nicolas93100.fueyo@gmail.com","Nouvelle réservation",
+        envoyerEmail("penthai.sriruang@gmail.com","Nouvelle réservation",
             $message);
 
         # Affiche vue message 'résearvation enregistrée'
         echo view('message_client',
             ['titre'=>'Réservation enregistrée',
-            'message'=>'Merci pour votre réservation. Nous revenons vers vous pour confirmation!']);
+            'message'=>'Merci pour votre réservation. Nous revenons vers vous pour une confirmation!']);
     }
 
     public function index() {

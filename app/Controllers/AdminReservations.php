@@ -52,13 +52,13 @@ class AdminReservations extends Controller
             $model = new ReservationModel();
             $nbLogementsDispos = $model->calculeNbLogementsDispo($dateEntree, $dateSortie, $_POST['typeLogement']);
             if( $nbLogementsDispos<$_POST['nbLogements'] ){
-                die('Pas assez de logements displonibles : ' .$nbLogementsDispos);
+                die('Pas assez de logements disponibles : ' .$nbLogementsDispos);
             }
 
 
             // Si tout est valide : enreistre la réservation et redirection
         }else{
-            die('errur de validation');
+            die('erreur de validation');
         }
 
         # Calcule prix total
